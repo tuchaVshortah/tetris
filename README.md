@@ -12,6 +12,6 @@ To compile this game you will need:
 After installing dependencies:
   1. open Terminal/CMD/Powershell
   2. run "make" command in root of the project
-  3. it will produce a binary file name "sfml-app"
+  3. it will produce a binary file name "tetris"
 
-Now you are able to "play" tetris -> launch "sfml-app"
+Now you are able to "play" tetris -> launch "tetris"
