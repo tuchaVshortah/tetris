@@ -1,56 +1,10 @@
-#include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include <string>
+#include "SFML/Graphics.hpp"
 
 using namespace sf;
 
-int x(0), y(0), i(0);
-float delay = 4.5, timer(0.0);
-
-bool blockIsNotFalling = true;
-
-const int HEIGHT = 20;
-const int WIDTH = 10;
-
-const int figures[7][4]=
-{
-	1,3,5,7, // I
-	2,4,5,7, // S
-	3,5,4,6, // Z
-	3,5,4,7, // T
-	2,3,5,7, // L
-	3,5,7,6, // J
-	2,3,4,5, // O
-};
-
-struct Point
-{
-	int x, y;
-} blocks[4], backupBlocks[4];
-
-bool check(){
-	for(i = 0; i < 4; ++i){
-		if(blocks[i].y == HEIGHT){
-			blockIsNotFalling = true;
-			return true;
-		}
-	}
-	return false;
-}
-
-
-bool checkIfInFrame(int &x, int &y){
-	if(x >= 0 && x <= WIDTH && y >= 0 && y <= HEIGHT){
-		return true;
-	}
-	return false;
-}
-
-void saveBlocks(){
-	backupBlocks[i].x = blocks[i].x;
-#include <SFML/Graphics.hpp>
-
-using namespace sf;
-
-int i(0), tileOffset(0);
+int scoreValue = 0, offset = 0;
 float delay = 4.5, timer(0.0);
 
 bool generateNewFigure = true;
@@ -58,7 +12,7 @@ bool generateNewFigure = true;
 const int HEIGHT = 20;
 const int WIDTH = 10;
 
-const int allBlockShapes[7][4]={
+const int allBlockShapes[7][4] = {
 	1,3,5,7, // I
 	2,4,5,7, // S
 	3,5,4,6, // Z
@@ -72,17 +26,29 @@ struct Block{
 	int x = 0, y = 0, blockSprite = 0;
 } blocks[4], backupBlocks[4];
 int inactiveBlockSprites[HEIGHT][WIDTH] = { 0 };
+
 sf::Sprite sprites[8];
 
-bool checkIfInFrame(){
-	for(i = 0; i < 4; ++i){
-		if(blocks[i].x >= 0 && blocks[i].x < WIDTH && blocks[i].y >= 0 && blocks[i].y < HEIGHT){
-			//check if the position is already occupied or height of the block is equal to the max height
-			if(inactiveBlockSprites[blocks[i].y][blocks[i].x] != 0 || blocks[i].y == HEIGHT - 1){
-				generateNewFigure = true;
-				return false;
-			}
+void checkLine(Text &score){
+	int k = HEIGHT - 1;
+	for (int i = HEIGHT - 1; i > 0; --i){
+		int count = 0;
+		for (int j = 0; j < WIDTH; ++j){
+			if (inactiveBlockSprites[i][j]) ++count;
+			inactiveBlockSprites[k][j] = inactiveBlockSprites[i][j];
+		}
+		if (count < WIDTH){
+			--k;
 		}else{
+			scoreValue += 10;
+			score.setString("+" + std::to_string(scoreValue));
+		}
+	}
+}
+
+bool checkIfInFrame(){
+	for(int i = 0, j = 0; i < 4; ++i){
+		if(blocks[i].x < 0 || blocks[i].x >= WIDTH || blocks[i].y >= HEIGHT || inactiveBlockSprites[blocks[i].y][blocks[i].x] != 0){
 			return false;
 		}
 	}
@@ -90,26 +56,29 @@ bool checkIfInFrame(){
 }
 
 void saveBlocks(){
-	backupBlocks[i].x = blocks[i].x;
-	backupBlocks[i].y = blocks[i].y;
+	for(int i = 0; i < 4; ++i){
+		backupBlocks[i].x = blocks[i].x;
+		backupBlocks[i].y = blocks[i].y;
+		backupBlocks[i].blockSprite = blocks[i].blockSprite;
+	}
 }
 
 void repairBlocks(){
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		blocks[i].x = backupBlocks[i].x;
 		blocks[i].y = backupBlocks[i].y;
+		blocks[i].blockSprite = backupBlocks[i].blockSprite;
 	}
 }
 
 void rotate(){
 
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		saveBlocks();
 	}
 
 	Block center = blocks[1];
-	for(i = 0; i < 4; ++i){
-
+	for(int i = 0; i < 4; ++i){
 		int x = blocks[i].y - center.y;
 		int y = blocks[i].x - center.x;
 		blocks[i].x = center.x - x;
@@ -121,28 +90,29 @@ void rotate(){
 	}
 }
 
-void verticalDown(){
+void verticalDown(Text &score){
 
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		saveBlocks();
 	}
 	
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		++blocks[i].y;
 	}
 
 	if(checkIfInFrame() == false){
 		repairBlocks();
+		generateNewFigure = true;
+		--scoreValue;
+		score.setString("-" + std::to_string(scoreValue));
 	}
 }
 
 void horizontalRight(){
 
-	for(i = 0; i < 4; ++i){
-		saveBlocks();
-	}
+	saveBlocks();
 	
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		++blocks[i].x;
 	}
 
@@ -153,11 +123,11 @@ void horizontalRight(){
 
 void horizontalLeft(){
 
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		saveBlocks();
 	}
 	
-	for(i = 0; i < 4; ++i){
+	for(int i = 0; i < 4; ++i){
 		--blocks[i].x;
 	}
 
@@ -166,10 +136,10 @@ void horizontalLeft(){
 	}
 }
 
-void fallDown(Clock &clock){
+void fallDown(Clock &clock, Text &score){
 	timer += clock.getElapsedTime().asSeconds();
 	if(timer > delay){
-		verticalDown();
+		verticalDown(score);
 		clock.restart();
 		timer = 0;
 	}
@@ -178,25 +148,31 @@ void fallDown(Clock &clock){
 int main(){
 	
 	srand(time(0));
-	
 	RenderWindow window(VideoMode(1920, 1080), "Tetris");
 	window.setFramerateLimit(60);
+	int blockShape = rand() % 7;
+	int blockSprite = rand() % 8;
 
 	//create Texture type variables
-	Texture tile, frame, background;
-
-	//load tile texture from file
+	Texture tile;
+	Font font;
+	//load tile scoreTexture from file
 	tile.loadFromFile("../images/tiles.png");
-	
-	frame.loadFromFile("../images/frame.png");
-	background.loadFromFile("../images/background.png");
+	font.loadFromFile("../fonts/arial.ttf");
+	//frame.loadFromFile("../images/frame.png");
+	//background.loadFromFile("../images/background.png");
 
 	//cache 8 tile sprites in memory to avoid file access
 	Sprite tileS(tile);
-	//Sprite frameS(frame);
-	//Sprite backgroundS(background);
-
-	int blockShape(rand() % 7), blockSprite(rand() % 7);
+	Text scoreText("", font, 25), score("", font, 25), timeText("", font, 35);
+	scoreText.setString("Score:");
+	scoreText.setStyle(Text::Bold);
+	scoreText.setFillColor(sf::Color::Blue);
+	scoreText.setPosition(200, 30);
+	score.setString("0");
+	score.setStyle(Text::Bold | Text::Underlined | Text::Italic);
+	score.setFillColor(sf::Color::Red);
+	score.setPosition(285, 30);
 	
 	//create and save tiles
 	for(int i = 0; i < 8; ++i){
@@ -204,10 +180,9 @@ int main(){
 		sprites[i] = tileS;
 	}
 
+	
 	Clock clock;
-
 	while(window.isOpen()){
-		
 		window.clear(Color::White);
 
 		Event event;
@@ -217,10 +192,10 @@ int main(){
 				window.close();
 			}
 			if (event.type == Event::KeyPressed){
-				if(event.key.code == Keyboard::Up){
+				if(event.key.code == Keyboard::Up || event.key.code == Keyboard::W){
 					rotate();
-				}else if(event.key.code == Keyboard::Down){
-					verticalDown();
+				}else if(event.key.code == Keyboard::Down || event.key.code == Keyboard::S){
+					verticalDown(score);
 				}else if(event.key.code == Keyboard::Right || event.key.code == Keyboard::D){
 					horizontalRight();
 				}else if(event.key.code == Keyboard::Left || event.key.code == Keyboard::A){
@@ -231,26 +206,23 @@ int main(){
 		
 		if(generateNewFigure){
 			//save blocks that can not move
-			for(i = 0; i < 4; ++i){
+			for(int i = 0; i < 4; ++i){
             	inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
         	}
 			//select a random shape and and sprite
 			blockShape = rand() % 7;
-			blockSprite = rand() % 7;
+			blockSprite = rand() % 8;
+			offset = rand() % 8;
 			for(int i = 0; i < 4; ++i){
-				blocks[i].x = allBlockShapes[blockShape][i] % 2;
+				blocks[i].x = allBlockShapes[blockShape][i] % 2 + offset;
 				blocks[i].y = allBlockShapes[blockShape][i] / 2;
 				blocks[i].blockSprite = blockSprite;
                 
 			};
 			generateNewFigure = false;
 		}
-
-		//window.draw(backgroundS);
-		//window.draw(frameS);
 		
-		
-		for(i = 0; i < 4; ++i){
+		for(int i = 0; i < 4; ++i){
 			sprites[blocks[i].blockSprite].setPosition(blocks[i].x * 18, blocks[i].y * 18);
 			window.draw(sprites[blocks[i].blockSprite]);
 		}
@@ -263,125 +235,12 @@ int main(){
 				}
 			}
 		}
-
+		window.draw(scoreText);
+		window.draw(score);
+		fallDown(clock, score);
+		checkLine(score);
 		window.display();
-
-		fallDown(clock);
-        
-			
-	}
-	return 0;
-}
-	for(i = 0; i < 4; ++i){
-		++blocks[i].x;
-	}
-
-	for(i = 0; i < 4; ++i){
-		if(checkIfInFrame(blocks[i].x, blocks[i].y) == false){
-			repairBlocks();
-			break;
-		}
-	}
-}
-
-void horizontalLeft(){
-
-	for(i = 0; i < 4; ++i){
-		saveBlocks();
-	}
-	
-	for(i = 0; i < 4; ++i){
-		--blocks[i].x;
-	}
-
-	for(i = 0; i < 4; ++i){
-		if(checkIfInFrame(blocks[i].x, blocks[i].y) == false){
-			repairBlocks();
-			break;
-		}
-	}
-}
-
-void fallDown(Clock &clock){
-	timer += clock.getElapsedTime().asSeconds();
-	if(timer > delay){
-		verticalDown();
-		clock.restart();
-		timer = 0;
-	}
-}
-
-int main(){
-	
-	srand(time(0));
-	
-	RenderWindow window(VideoMode(320, 480), "tetris");
-	window.setFramerateLimit(60);
-
-	Texture tile, frame, background;
-
-	tile.loadFromFile("../images/tiles.png");
-	//frame.loadFromFile("/home/zeus/C++/Projects/Tetris_game/images/frame.png");
-	//background.loadFromFile("/home/zeus/C++/Projects/Tetris_game/images/background.png");
-
-	Sprite tileS(tile);
-	//Sprite frameS(frame);
-	//Sprite backgroundS(background);
-
-	int n = rand() % 7;
-	int colorTextureOffset = 18 * (rand() % 7);
-	tileS.setTextureRect(IntRect(colorTextureOffset, 0, 18, 18));
-
-	Clock clock;
-
-	while(window.isOpen()){
-		
-		window.clear(Color::White);
-
-		Event event;
-		while(window.pollEvent(event)){
-
-			if(event.type == Event::Closed){
-				window.close();
-			}
-			if (event.type == Event::KeyPressed){
-				if(event.key.code == Keyboard::Up){
-					rotate();
-				}else if(event.key.code == Keyboard::Down){
-					verticalDown();
-				}else if(event.key.code == Keyboard::Right || event.key.code == Keyboard::D){
-					horizontalRight();
-				}else if(event.key.code == Keyboard::Left || event.key.code == Keyboard::A){
-					horizontalLeft();
-				}
-			}
-		}
-		
-		if(blockIsNotFalling){
-			for(int i = 0; i < 4; ++i){
-				blocks[i].x = figures[n][i] % 2;
-				blocks[i].y = figures[n][i] / 2;
-			};
-			blockIsNotFalling = false;
-		}
-
-		//window.draw(backgroundS);
-		//window.draw(frameS);
-		
-		for(i = 0; i < 4; ++i){
-			tileS.setPosition(blocks[i].x * 18, blocks[i].y * 18);
-			window.draw(tileS);
-		}
-
-		window.display();
-
-		fallDown(clock);
-
-		if(check()){
-			n = rand() % 7;
-			colorTextureOffset = 18 * (rand() % 7);
-			tileS.setTextureRect(IntRect(colorTextureOffset, 0, 18, 18));
-		}
+        	
 	}
 	return 0;
 }
