@@ -14,10 +14,25 @@ void tetrisInit(){
 	scoreText.setFillColor(Color::Blue);
 	scoreText.setPosition(200, 30);
 
+	scoreText2.setString("Score:");
+	scoreText2.setStyle(Text::Bold);
+	scoreText2.setFillColor(Color::Blue);
+	scoreText2.setPosition(800, 30);
+
+	gameOverText.setString("Game over!");
+	gameOverText.setStyle(Text::Bold);
+	gameOverText.setFillColor(Color::Red);
+	gameOverText.setPosition(500, 500);
+
 	score.setString("0");
 	score.setStyle(Text::Bold | Text::Underlined | Text::Italic);
 	score.setFillColor(Color::Red);
 	score.setPosition(285, 30);
+
+	score2.setString("0");
+	score2.setStyle(Text::Bold | Text::Underlined | Text::Italic);
+	score2.setFillColor(Color::Red);
+	score2.setPosition(885, 30);
 
     for(int i = 0; i < 8; ++i){
 		tileS.setTextureRect(IntRect(18 * i, 0, 18, 18));
@@ -25,29 +40,54 @@ void tetrisInit(){
 	}
 }
 
-Block blocks[4], backupBlocks[4];
+Block blocks[4], blocks2[4], backupBlocks[4], backupBlocks2[4];
 
-void checkLine(int inactiveBlockSprites[HEIGHT][WIDTH], sf::Text &score){
+void checkLine(int inactiveBlockSprites[HEIGHT][WIDTH], sf::Text &score, int inactiveBlockSprites2[HEIGHT][WIDTH], sf::Text &score2){
 	int k = HEIGHT - 1;
+	for(int i = 0; i < WIDTH; ++i){
+		if(inactiveBlockSprites[0][i] != 0 || inactiveBlockSprites2[0][i] != 0){
+			gameOver = true;
+		}
+	}
 	for (int i = HEIGHT - 1; i > 0; --i){
 		int count = 0;
 		for (int j = 0; j < WIDTH; ++j){
 			if (inactiveBlockSprites[i][j]) ++count;
 			inactiveBlockSprites[k][j] = inactiveBlockSprites[i][j];
 		}
-		if (count < WIDTH){
+		if(count < WIDTH){
 			--k;
 		}else{
 			scoreValue += 10;
-			score.setString("+" + std::to_string(scoreValue));
+			score.setString(std::to_string(scoreValue));
+		}
+	}
+	k = HEIGHT - 1;
+	for (int i = HEIGHT - 1; i > 0; --i){
+		int count = 0;
+		for (int j = 0; j < WIDTH; ++j){
+			if(inactiveBlockSprites2[i][j]) ++count;
+			inactiveBlockSprites2[k][j] = inactiveBlockSprites2[i][j];
+		}
+		if(count < WIDTH){
+			--k;
+		}else{
+			scoreValue2 += 10;
+			score2.setString(std::to_string(scoreValue2));
 		}
 	}
 }
 
-bool checkIfInFrame(Block blocks[]){
+bool checkIfInFrame(Block blocks[], bool firstPlayer){
 	for(int i = 0, j = 0; i < 4; ++i){
-		if(blocks[i].x < 0 || blocks[i].x >= WIDTH || blocks[i].y >= HEIGHT || inactiveBlockSprites[blocks[i].y][blocks[i].x] != 0){
-			return false;
+		if(firstPlayer){
+			if(blocks[i].x < 0 || blocks[i].x >= WIDTH || blocks[i].y >= HEIGHT || inactiveBlockSprites[blocks[i].y][blocks[i].x] != 0){
+				return false;
+			}
+		}else{
+			if(blocks[i].x < 0 || blocks[i].x >= WIDTH || blocks[i].y >= HEIGHT || inactiveBlockSprites2[blocks[i].y][blocks[i].x] != 0){
+				return false;
+			}
 		}
 	}
 	return true;
@@ -69,7 +109,7 @@ void repairBlocks(Block blocks[], Block backupBlocks[]){
 	}
 }
 
-void rotate(Block blocks[], Block backupBlocks[]){
+void rotate(Block blocks[], Block backupBlocks[], bool firstPlayer){
 
 	for(int i = 0; i < 4; ++i){
 		saveBlocks(backupBlocks, blocks);
@@ -83,12 +123,12 @@ void rotate(Block blocks[], Block backupBlocks[]){
 		blocks[i].y = center.y + y;
 	}
 	
-	if(checkIfInFrame(blocks) == false){
+	if(checkIfInFrame(blocks, firstPlayer) == false){
 		repairBlocks(blocks, backupBlocks);
 	}
 }
 
-void verticalDown(Block blocks[], Block backupBlocks[], sf::Text &score){
+void verticalDown(Block blocks[], Block backupBlocks[], sf::Text &score, bool firstPlayer){
 
 	for(int i = 0; i < 4; ++i){
 		saveBlocks(backupBlocks, blocks);
@@ -98,15 +138,21 @@ void verticalDown(Block blocks[], Block backupBlocks[], sf::Text &score){
 		++blocks[i].y;
 	}
 
-	if(checkIfInFrame(blocks) == false){
+	if(checkIfInFrame(blocks, firstPlayer) == false){
 		repairBlocks(blocks, backupBlocks);
-		generateNewFigure = true;
-		--scoreValue;
-		score.setString("-" + std::to_string(scoreValue));
+		if(firstPlayer){
+			generateNewFigure = true;
+			--scoreValue;
+			score.setString("-" + std::to_string(scoreValue));
+		}else{
+			generateNewFigure2 = true;
+			--scoreValue2;
+			score2.setString("-" + std::to_string(scoreValue));
+		}
 	}
 }
 
-void horizontalRight(Block blocks[], Block backupBlocks[]){
+void horizontalRight(Block blocks[], Block backupBlocks[], bool firstPlayer){
 
 	saveBlocks(backupBlocks, blocks);
 	
@@ -114,12 +160,12 @@ void horizontalRight(Block blocks[], Block backupBlocks[]){
 		++blocks[i].x;
 	}
 
-	if(checkIfInFrame(blocks) == false){
+	if(checkIfInFrame(blocks, firstPlayer) == false){
 		repairBlocks(blocks, backupBlocks);
 	}
 }
 
-void horizontalLeft(Block blocks[], Block backupBlocks[]){
+void horizontalLeft(Block blocks[], Block backupBlocks[], bool firstPlayer){
 
 	for(int i = 0; i < 4; ++i){
 		saveBlocks(backupBlocks, blocks);
@@ -129,15 +175,16 @@ void horizontalLeft(Block blocks[], Block backupBlocks[]){
 		--blocks[i].x;
 	}
 
-	if(checkIfInFrame(blocks) == false){
+	if(checkIfInFrame(blocks, firstPlayer) == false){
 		repairBlocks(blocks, backupBlocks);
 	}
 }
 
-void fallDown(sf::Clock &clock, Block blocks[], Block backupBlocks[], sf::Text &score){
+void fallDown(sf::Clock &clock, Block blocks[], Block backupBlocks[],  Block blocks2[], Block backupBlocks2[], sf::Text &score){
 	timer += clock.getElapsedTime().asSeconds();
 	if(timer > delay){
-		verticalDown(blocks, backupBlocks, score);
+		verticalDown(blocks, backupBlocks, score, true);
+		verticalDown(blocks2, backupBlocks2, score2, false);
 		clock.restart();
 		timer = 0;
 	}
