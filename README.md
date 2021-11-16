@@ -1,3 +1,9 @@
+WARNING!
+This software is in alpha state. NOT production ready in any way. 
+
+ATTENTION!
+Bad quality C++ code detected. Probably shoud've written it in OOP style.
+
 Prototype of the Tetris game fully written in C++
 
 Demo:
