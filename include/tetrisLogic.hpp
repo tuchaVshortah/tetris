@@ -20,5 +20,6 @@ bool generateNewFigure = true, generateNewFigure2 = true, gameOver = false;
 sf::Texture tile;
 sf::Font font;
 sf::Sprite sprites[8];
-sf::Text scoreText("", font, 25), scoreText2("", font, 25),score("", font, 25), score2("", font, 25), gameOverText("", font, 80);
+sf::Text scoreText("", font, 25), scoreText2("", font, 25),score("", font, 25), score2("", font, 25), gameOverText("", font, 80), tempScore[1], tempScore2[1];
+
 #endif
