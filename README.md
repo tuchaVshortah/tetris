@@ -29,16 +29,27 @@ Now you are able to "play" tetris -> launch "tetris".
 
 Hotkeys:
    1 - singleplayer mode
+   
    2 - multiplayer mode on keyboard (left player - WASD, right player - arrows)
+   
    3 - multiplayer mode through TCP socket connection (either of players use WASD)
+   
    C - client mode
+   
    S - server mode
+   
    ESC - move to the previous screen or close the game
+   
    Backspace - delete characters
+   
    W - rotate to the right
+   
    A - move to the left
+   
    S - fall down faster
+   
    D - move to the right
+   
    Arrows - do the same thing as WASD
    
 Rules:
