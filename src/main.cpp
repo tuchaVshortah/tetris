@@ -66,7 +66,11 @@ int main(){
                         title = false;
                         getSocketType = true;
                         drawSocketText = true;
-					}
+					}else if(event.key.code == Keyboard::Escape){
+                        if(window.isOpen()){
+                            window.close();
+                        }
+                    }
 				}
 			}
 		}
@@ -90,17 +94,23 @@ int main(){
                     socket_str = "S";
                     server = true;
                 }else if(socketEvent.key.code == Keyboard::Enter){
-                    if(server == true){
+                    if(server == true && socket_str == "S"){
                         getSocketType = false;
                         getPort = true;
                         drawPortText = true;
-                    }else if(server == false){
+                    }else if(server == false && socket_str == "C"){
                         getSocketType = false;
                         getIpAddress = true;
                         drawIpText = true;
                     }
                 }else if(socketEvent.key.code == Keyboard::Backspace){
                     socket_str = "";
+                }else if(socketEvent.key.code == Keyboard::Escape){
+                    title = true;
+                    getSocketType = false;
+                    drawSocketText = false;
+                    socket_str = "";
+                    server = false;
                 }
             }
             socket.setString(socket_str);
@@ -150,7 +160,15 @@ int main(){
 						}
 					}else if(ipEvent.key.code == Keyboard::Backspace){
 						ip_str.pop_back();
-					}
+					}else if(ipEvent.key.code == Keyboard::Escape){
+                        title = true;
+                        drawSocketText = false;
+                        getIpAddress = false;
+                        drawIpText = false;
+                        socket_str = "";
+                        ip_str = "";
+                        i = 0;
+                    }
 					++i;	
 				}
 			}
@@ -199,9 +217,7 @@ int main(){
                                 }
                             }else{
                                 title = true;
-                                getSocketType = false;
                                 drawSocketText = false;
-                                getIpAddress = false;
                                 drawIpText = false;
                                 getPort = false;
                                 drawPortText = false;
@@ -212,7 +228,16 @@ int main(){
 						}			
 					}else if(portEvent.key.code == Keyboard::Backspace){
 						port_str.pop_back();
-					}
+					}else if(portEvent.key.code == Keyboard::Escape){
+                        title = true;
+                        drawSocketText = false;
+                        drawIpText = false;
+                        getPort = false;
+                        drawPortText = false;
+                        socket_str = "";
+                        ip_str = "";
+                        port_str = "";
+                    }
 					++i;	
 				}
 			}

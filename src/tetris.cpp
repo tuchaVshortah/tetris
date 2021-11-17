@@ -30,10 +30,32 @@ int tetris(sf::RenderWindow &window){
 					horizontalRight(blocks, backupBlocks, true);
 				}else if(event.key.code == Keyboard::A){
 					horizontalLeft(blocks, backupBlocks, true);
-				}
+				}else if(event.key.code == Keyboard::Escape){
+
+                    for(int i = 0; i < 4; ++i){
+                        blocks[i].x = 0;
+                        blocks[i].y = 0;
+                        blocks[i].blockSprite = 0;
+                    }
+
+                    for(int i = 0; i < HEIGHT; ++i){
+                        for(int j = 0; j < WIDTH; ++j){
+                            inactiveBlockSprites[i][j] = 0;
+                            inactiveBlockSprites2[i][j] = 0;
+                        }
+                    }
+
+                    generateNewFigure = true;
+                    scoreValue = 0;
+                    score.setString("0");
+                    kill = true;
+                }
 			}
 		}
-
+        if(kill){
+            kill = false;
+            break;
+        }
 		if(generateNewFigure){
 			for(int i = 0; i < 4; ++i){
        			     	inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
@@ -71,13 +93,22 @@ int tetris(sf::RenderWindow &window){
 		if(gameOver){
 			window.draw(gameOverText);
 			window.display();
-			std::this_thread::sleep_for(std::chrono::seconds(5));
+			sleep(seconds(5));
+
+            for(int i = 0; i < 4; ++i){
+                blocks[i].x = 0;
+                blocks[i].y = 0;
+                blocks[i].blockSprite = 0;
+            }
+
             for(int i = 0; i < HEIGHT; ++i){
                 for(int j = 0; j < WIDTH; ++j){
                     inactiveBlockSprites[i][j] = 0;
                     inactiveBlockSprites2[i][j] = 0;
                 }
             }
+
+            generateNewFigure = true;
             gameOver = false;
             scoreValue = 0;
             score.setString("0");
@@ -120,10 +151,40 @@ int tetris2(sf::RenderWindow &window){
 					horizontalRight(blocks2, backupBlocks2, false);
 				}else if(event.key.code == Keyboard::Left){
 					horizontalLeft(blocks2, backupBlocks2, false);
-				}
+				}else if(event.key.code == Keyboard::Escape){
+
+                    for(int i = 0; i < 4; ++i){
+                        blocks[i].x = 0;
+                        blocks2[i].x = 0;
+
+                        blocks[i].y = 0;
+                        blocks2[i].y = 0;
+
+                        blocks[i].blockSprite = 0;
+                        blocks2[i].blockSprite = 0;
+                    }
+
+                    for(int i = 0; i < HEIGHT; ++i){
+                        for(int j = 0; j < WIDTH; ++j){
+                            inactiveBlockSprites[i][j] = 0;
+                            inactiveBlockSprites2[i][j] = 0;
+                        }
+                    }
+
+                    generateNewFigure = true;
+                    generateNewFigure2 = true;
+                    scoreValue = 0;
+                    scoreValue2 = 0;
+                    score.setString("0");
+                    score2.setString("0");
+                    kill = true;
+                }
 			}
 		}
-		
+		if(kill){
+            kill = false;
+            break;
+        }
 		if(generateNewFigure){
 			for(int i = 0; i < 4; ++i){
                     inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
@@ -192,13 +253,28 @@ int tetris2(sf::RenderWindow &window){
 		if(gameOver){
 			window.draw(gameOverText);
 			window.display();
-		    std::this_thread::sleep_for(std::chrono::seconds(5));
+		    sleep(seconds(5));
+
+            for(int i = 0; i < 4; ++i){
+                blocks[i].x = 0;
+                blocks2[i].x = 0;
+
+                blocks[i].y = 0;
+                blocks2[i].y = 0;
+
+                blocks[i].blockSprite = 0;
+                blocks2[i].blockSprite = 0;
+            }
+
             for(int i = 0; i < HEIGHT; ++i){
                 for(int j = 0; j < WIDTH; ++j){
                     inactiveBlockSprites[i][j] = 0;
                     inactiveBlockSprites2[i][j] = 0;
                 }
             }
+
+            generateNewFigure = true;
+            generateNewFigure2 = true;
             gameOver = false;
             scoreValue = 0;
             scoreValue2 = 0;
@@ -235,10 +311,26 @@ void logic(sf::RenderWindow &window){
 					horizontalRight(blocks, backupBlocks, true);
 				}else if(event.key.code == Keyboard::A){
 					horizontalLeft(blocks, backupBlocks, true);
-				}
+				}else if(event.key.code == Keyboard::Escape){
+                    for(int i = 0; i < HEIGHT; ++i){
+                        for(int j = 0; j < WIDTH; ++j){
+                            inactiveBlockSprites[i][j] = 0;
+                            inactiveBlockSprites2[i][j] = 0;
+                        }
+                    }
+                    generateNewFigure = true;
+                    scoreValue = 0;
+                    scoreValue2 = 0;
+                    score.setString("0");
+                    score2.setString("0");
+                    kill = true;
+                }
 			}
 		}
-
+        if(kill){
+            kill = false;
+            break;
+        }
 		if(generateNewFigure){
 			for(int i = 0; i < 4; ++i){
                 inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
@@ -292,13 +384,15 @@ void logic(sf::RenderWindow &window){
 		if(gameOver){
 			window.draw(gameOverText);
 			window.display();
-		    std::this_thread::sleep_for(std::chrono::seconds(5));
+		    sleep(seconds(5));
             for(int i = 0; i < HEIGHT; ++i){
                 for(int j = 0; j < WIDTH; ++j){
                     inactiveBlockSprites[i][j] = 0;
                     inactiveBlockSprites2[i][j] = 0;
                 }
             }
+
+            generateNewFigure = true;
             gameOver = false;
             scoreValue = 0;
             scoreValue2 = 0;

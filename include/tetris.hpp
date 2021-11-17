@@ -8,7 +8,7 @@ extern int blockShape, blockSprite, offset;
 extern int inactiveBlockSprites[20][10], inactiveBlockSprites2[20][10];
 extern const int allBlockShapes[7][4];
 extern double timer, timer2, delay;
-extern bool generateNewFigure, generateNewFigure2, gameOver;
+extern bool generateNewFigure, generateNewFigure2, gameOver, kill;
 extern sf::Text scoreText, scoreText2, score, score2, gameOverText;
 extern sf::Sprite sprites[8];
 extern struct Block blocks[4], blocks2[4], backupBlocks[4], backupBlocks2[4];

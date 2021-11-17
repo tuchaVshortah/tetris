@@ -15,7 +15,7 @@ int inactiveBlockSprites[HEIGHT][WIDTH] = { 0 }, inactiveBlockSprites2[HEIGHT][W
 int blockShape = rand() % 7, blockSprite = rand() % 8;
 int scoreValue = 0, scoreValue2 = 0, offset = 0;
 double timer = 0.0, timer2 = 0.0, delay = 4.5;
-bool generateNewFigure = true, generateNewFigure2 = true, gameOver = false;
+bool generateNewFigure = true, generateNewFigure2 = true, gameOver = false, kill = false;
 
 sf::Texture tile;
 sf::Font font;
