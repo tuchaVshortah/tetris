@@ -11,6 +11,10 @@ Prototype of the Tetris game fully written in C++
 Demo:
 https://user-images.githubusercontent.com/71591558/142195671-18f01e50-2e0a-413d-8d5e-be76d784eaab.mp4
 
+
+https://user-images.githubusercontent.com/71591558/142198992-6faa6fe8-f290-4d4c-bc74-7c2136b368e3.mp4
+
+
 To compile this game you will need:
   1. (optional -> in Manjaro you can download it with pacman) SFML library from https://www.sfml-dev.org/download/sfml/2.5.1/
   2. make
