@@ -85,7 +85,7 @@ void checkLine2(int inactiveBlockSprites[HEIGHT][WIDTH], sf::Text &score, int in
 void checkLine(int inactiveBlockSprites[HEIGHT][WIDTH], sf::Text &score){ 
 	int k = HEIGHT - 1;
 	for(int i = 0; i < WIDTH; ++i){
-		if(inactiveBlockSprites[0][i] != 0 || inactiveBlockSprites2[0][i] != 0){
+		if(inactiveBlockSprites[1][i] != 0){
 			gameOver = true;
 		}
 	}
