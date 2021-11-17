@@ -8,7 +8,7 @@ Bad quality C++ code has been detected. Probably shoud've been written in the OO
 
 Prototype of the Tetris game fully written in C++
 
-Demo:
+
 https://user-images.githubusercontent.com/71591558/142195671-18f01e50-2e0a-413d-8d5e-be76d784eaab.mp4
 
 
