@@ -9,6 +9,8 @@ sf::Music  music;
 bool play = true;
 sf::Font font;
 void player(){
+    music.openFromFile("../audio/music.wav");
+    music.setLoop(true);
     if(play){
         music.play();
     }
@@ -48,8 +50,6 @@ int main(){
     socket.setFillColor(Color::Red);
     socket.setPosition(1200, 200);
 	bool title = true, getSocketType = false, drawSocketText = false, getIpAddress = false, drawIpText = false, getPort = false, drawPortText = false, server = false;
-    music.openFromFile("../audio/music.wav");
-    music.setLoop(true);
     Thread musicPlayer(&player);
     musicPlayer.launch();
 	while(window.isOpen()){

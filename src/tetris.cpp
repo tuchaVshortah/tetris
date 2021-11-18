@@ -65,10 +65,10 @@ int tetris(sf::RenderWindow &window){
         }
 		if(generateNewFigure){
 			for(int i = 0; i < 4; ++i){
-       			     	inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
-        		}
+                inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
+            }
 			blockShape = rand() % 7;
-			blockSprite = rand() % 8;
+			blockSprite = rand() % 7 + 1;
 			offset = rand() % 8;
 			for(int i = 0; i < 4; ++i){
 				blocks[i].x = allBlockShapes[blockShape][i] % 2 + offset;
@@ -120,7 +120,6 @@ int tetris(sf::RenderWindow &window){
             scoreValue = 0;
             score.setString("0");
             break;
-			//window.close();
 		}
 		window.display();
 	}
@@ -186,12 +185,12 @@ int tetris2(sf::RenderWindow &window){
                     score2.setString("0");
                     kill = true;
                 }else if(event.key.code == Keyboard::Num4){
-                        play = !(play);
-                        if(play){
-                            music.play();
-                        }else{
-                            music.pause();
-                        }
+                    play = !(play);
+                    if(play){
+                        music.play();
+                    }else{
+                        music.pause();
+                    }
                 }
 			}
 		}
@@ -204,7 +203,7 @@ int tetris2(sf::RenderWindow &window){
                     inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
             }
 			blockShape = rand() % 7;
-			blockSprite = rand() % 8;
+			blockSprite = rand() % 7 + 1;
 			offset = rand() % 8;
 			for(int i = 0; i < 4; ++i){
 				blocks[i].x = allBlockShapes[blockShape][i] % 2 + offset;
@@ -220,7 +219,7 @@ int tetris2(sf::RenderWindow &window){
             			inactiveBlockSprites2[blocks2[i].y][blocks2[i].x] = blocks2[i].blockSprite;
         		}
 			blockShape = rand() % 7;
-			blockSprite = rand() % 8;
+			blockSprite = rand() % 7 + 1;
 			offset = rand() % 8;
 			for(int i = 0; i < 4; ++i){
 				blocks2[i].x = allBlockShapes[blockShape][i] % 2 + offset;
@@ -295,7 +294,6 @@ int tetris2(sf::RenderWindow &window){
             score.setString("0");
             score2.setString("0");
             break;
-			//window.close();
 		}
 		window.display();
         	
@@ -339,12 +337,12 @@ void logic(sf::RenderWindow &window){
                     score2.setString("0");
                     kill = true;
                 }else if(event.key.code == Keyboard::Num4){
-                        play = !(play);
-                        if(play){
-                            music.play();
-                        }else{
-                            music.pause();
-                        }
+                    play = !(play);
+                    if(play){
+                        music.play();
+                    }else{
+                        music.pause();
+                    }
                 }
 			}
 		}
@@ -357,7 +355,7 @@ void logic(sf::RenderWindow &window){
                 inactiveBlockSprites[blocks[i].y][blocks[i].x] = blocks[i].blockSprite;
             }
 			blockShape = rand() % 7;
-			blockSprite = rand() % 8;
+			blockSprite = rand() % 7 + 1;
 			offset = rand() % 8;
 			for(int i = 0; i < 4; ++i){
 				blocks[i].x = allBlockShapes[blockShape][i] % 2 + offset;
@@ -420,7 +418,6 @@ void logic(sf::RenderWindow &window){
             score.setString("0");
             score2.setString("0");
             break;
-			//window.close();
 		}
 		window.display();
     }
