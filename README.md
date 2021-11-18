@@ -1,13 +1,11 @@
 Read it carefully.
 
-Known bugs:
-
-    Sometimes blocks may disappear from the screen
-
 WARNING!
+
 This software is in alpha state. NOT production ready in any way. 
 
 ATTENTION!
+
 Bad quality C++ code has been detected. Probably shoud've been written in the OOP style.
 
 Prototype of the Tetris game fully written in C++
