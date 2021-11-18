@@ -169,11 +169,11 @@ void verticalDown(Block blocks[], Block backupBlocks[], sf::Text &score, bool fi
 		if(firstPlayer){
 			generateNewFigure = true;
 			--scoreValue;
-			score.setString("-" + std::to_string(scoreValue));
+			score.setString(std::to_string(scoreValue));
 		}else{
 			generateNewFigure2 = true;
 			--scoreValue2;
-			score2.setString("-" + std::to_string(scoreValue));
+			score2.setString(std::to_string(scoreValue2));
 		}
 	}
 }
