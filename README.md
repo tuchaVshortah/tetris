@@ -1,5 +1,8 @@
 Read it carefully.
 
+Known bugs:
+  Sometimes blocks may disappear from the screen
+
 WARNING!
 This software is in alpha state. NOT production ready in any way. 
 
