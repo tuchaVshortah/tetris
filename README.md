@@ -12,12 +12,15 @@ Bad quality C++ code has been detected. Probably shoud've been written in the OO
 
 Prototype of the Tetris game fully written in C++
 
+OLDER VERSIONS:
 
 https://user-images.githubusercontent.com/71591558/142195671-18f01e50-2e0a-413d-8d5e-be76d784eaab.mp4
 
 
 https://user-images.githubusercontent.com/71591558/142198992-6faa6fe8-f290-4d4c-bc74-7c2136b368e3.mp4
 
+
+CURRENT VERSION:
 
 https://user-images.githubusercontent.com/71591558/142373986-ca8a8353-a6db-4e4c-ade3-a53e2a4e8f72.mp4
 
