@@ -33,9 +33,17 @@ After installing dependencies:
     
     3. run "make" command in root of the project
     
-    4. it will produce a binary file name "tetris"
+    4. it will produce a binary file name "sfml-tetris"
+    
+    5. create "fonts" directory at the root of the project
+    
+    6. insert a "font.ttf" file in the directory (if the name of your font is different rename it to "font.ttf")
+    
+    7. create "audio" directory in the root of the project
+    
+    8. insert a "music.wav" file in the directory(if the name of your music is different rename it to "music.wav")
 
-Now you are able to "play" tetris -> launch "tetris".
+Now you are able to "play" tetris -> launch "sfml-tetris".
 
 Hotkeys:
 
