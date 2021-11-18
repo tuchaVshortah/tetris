@@ -1,6 +1,4 @@
-1. IMPROVE COLLISSION LOGIC AND FIX BUGS
-2. improve gui
-3. add Cmake support
+1. improve gui
+2. add Cmake support
 
-
-OPTIMIZE CODE!!!
+Code needs optimization!
