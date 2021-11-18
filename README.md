@@ -57,6 +57,7 @@ Hotkeys:
    Arrows - do the same thing as WASD
    
 Rules:
+
         1. You lose 1 point for each new block
         
         2. You receive 10 points for each line
