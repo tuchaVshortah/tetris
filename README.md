@@ -1,6 +1,7 @@
 Read it carefully.
 
 Known bugs:
+
   Sometimes blocks may disappear from the screen
 
 WARNING!
