@@ -49,6 +49,13 @@ int tetris(sf::RenderWindow &window){
                     scoreValue = 0;
                     score.setString("0");
                     kill = true;
+                }else if(event.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
+                        }
                 }
 			}
 		}
@@ -178,6 +185,13 @@ int tetris2(sf::RenderWindow &window){
                     score.setString("0");
                     score2.setString("0");
                     kill = true;
+                }else if(event.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
+                        }
                 }
 			}
 		}
@@ -324,6 +338,13 @@ void logic(sf::RenderWindow &window){
                     score.setString("0");
                     score2.setString("0");
                     kill = true;
+                }else if(event.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
+                        }
                 }
 			}
 		}

@@ -11,7 +11,6 @@ void tetrisInit(){
 	using namespace sf;
 	srand(time(0));
 	tile.loadFromFile("../images/tiles.png");
-	font.loadFromFile("../fonts/arial.ttf");
 
 	Sprite tileS(tile);
 	

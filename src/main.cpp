@@ -1,8 +1,18 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 #include "main.hpp"
 #include "shared.hpp"
 
 std::string socket_str, ip_str, port_str;
+sf::Music  music;
+bool play = true;
+sf::Font font;
+void player(){
+    if(play){
+        music.play();
+    }
+}
 
 int main(){
 	tetrisInit();
@@ -10,15 +20,16 @@ int main(){
 	int i = 0;
 	RenderWindow window(VideoMode(1920, 1080), "Tetris");
 	window.setFramerateLimit(60);
-	Font font;
-	font.loadFromFile("../fonts/arial.ttf");
+
+	font.loadFromFile("../fonts/font.ttf");
 	Text titleText("", font, 60), gamemodeText("", font, 25), ipText("", font, 40), ip("", font, 40), portText("", font, 40), port("", font, 40), socketText("", font, 60), socket("", font, 60);
 	titleText.setString("Choose gamemode:");
 	titleText.setFillColor(Color::Blue);
 	titleText.setPosition(200, 200);
-	gamemodeText.setString("1 - singleplayer,\
-                            2 - multiplayer on keyboard,\
-                            3 - multiplayer on network");
+	gamemodeText.setString("                            1 - singleplayer,\n\
+                            2 - multiplayer on keyboard,\n\
+                            3 - multiplayer on network,\n\
+                            4 - toggle music");
 	gamemodeText.setFillColor(Color::Red);
 	gamemodeText.setPosition(200, 270);
 	ipText.setString("Enter ip address of the server: ");
@@ -37,7 +48,10 @@ int main(){
     socket.setFillColor(Color::Red);
     socket.setPosition(1200, 200);
 	bool title = true, getSocketType = false, drawSocketText = false, getIpAddress = false, drawIpText = false, getPort = false, drawPortText = false, server = false;
-
+    music.openFromFile("../audio/music.wav");
+    music.setLoop(true);
+    Thread musicPlayer(&player);
+    musicPlayer.launch();
 	while(window.isOpen()){
         window.clear(Color::White);
 
@@ -69,6 +83,13 @@ int main(){
 					}else if(event.key.code == Keyboard::Escape){
                         if(window.isOpen()){
                             window.close();
+                        }
+                    }else if(event.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
                         }
                     }
 				}
@@ -111,6 +132,13 @@ int main(){
                     drawSocketText = false;
                     socket_str = "";
                     server = false;
+                }else if(socketEvent.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
+                        }
                 }
             }
             socket.setString(socket_str);
@@ -128,26 +156,37 @@ int main(){
 				if(ipEvent.type == Event::KeyPressed){
 					if(ipEvent.key.code == Keyboard::Num0){
 						ip_str += "0";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num1){
 						ip_str += "1";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num2){
 						ip_str += "2";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num3){
 						ip_str += "3";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num4){
 						ip_str += "4";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num5){
 						ip_str += "5";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num6){
 						ip_str += "6";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num7){
 						ip_str += "7";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num8){
 						ip_str += "8";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Num9){
 						ip_str += "9";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Period){
-					     ip_str += ".";
+                        ip_str += ".";
+                        ++i;
 					}else if(ipEvent.key.code == Keyboard::Enter){
 						if(i < 7 || i > 15){
 							ip_str = "";
@@ -160,6 +199,7 @@ int main(){
 						}
 					}else if(ipEvent.key.code == Keyboard::Backspace){
 						ip_str.pop_back();
+                        --i;
 					}else if(ipEvent.key.code == Keyboard::Escape){
                         title = true;
                         drawSocketText = false;
@@ -168,8 +208,14 @@ int main(){
                         socket_str = "";
                         ip_str = "";
                         i = 0;
+                    }else if(ipEvent.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
+                        }
                     }
-					++i;	
 				}
 			}
 			ip.setString(ip_str);
@@ -187,24 +233,34 @@ int main(){
 				if(portEvent.type == Event::KeyPressed){
 					if(portEvent.key.code == Keyboard::Num0){
 						port_str += "0";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num1){
 						port_str += "1";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num2){
 						port_str += "2";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num3){
 						port_str += "3";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num4){
 						port_str += "4";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num5){
 						port_str += "5";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num6){
 						port_str += "6";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num7){
 						port_str += "7";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num8){
 						port_str += "8";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Num9){
 						port_str += "9";
+                        ++i;
 					}else if(portEvent.key.code == Keyboard::Enter){
 						if(port_str == "" || i > 6){
 							port_str = "";
@@ -228,6 +284,7 @@ int main(){
 						}			
 					}else if(portEvent.key.code == Keyboard::Backspace){
 						port_str.pop_back();
+                        --i;
 					}else if(portEvent.key.code == Keyboard::Escape){
                         title = true;
                         drawSocketText = false;
@@ -237,8 +294,14 @@ int main(){
                         socket_str = "";
                         ip_str = "";
                         port_str = "";
-                    }
-					++i;	
+                    }else if(portEvent.key.code == Keyboard::Num4){
+                        play = !(play);
+                        if(play){
+                            music.play();
+                        }else{
+                            music.pause();
+                        }
+                    };
 				}
 			}
 			port.setString(port_str);
@@ -260,5 +323,6 @@ int main(){
 
 		window.display();	
 	}
+	musicPlayer.terminate();
 	return 0;
 }

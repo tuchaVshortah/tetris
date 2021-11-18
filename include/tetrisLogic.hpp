@@ -1,6 +1,7 @@
 #pragma once 
 #ifndef TETRIS_LOGIC_H
 #define TETRIS_LOGIC_H
+#include "shared.hpp"
 extern const int allBlockShapes[7][4] = {
 	1,3,5,7, // I
 	2,4,5,7, // S
@@ -18,7 +19,6 @@ double timer = 0.0, timer2 = 0.0, delay = 4.5;
 bool generateNewFigure = true, generateNewFigure2 = true, gameOver = false, kill = false;
 
 sf::Texture tile;
-sf::Font font;
 sf::Sprite sprites[8];
 sf::Text scoreText("", font, 25), scoreText2("", font, 25),score("", font, 25), score2("", font, 25), gameOverText("", font, 80), tempScore[1], tempScore2[1];
 
