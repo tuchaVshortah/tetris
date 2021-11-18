@@ -57,11 +57,13 @@ Hotkeys:
    Arrows - do the same thing as WASD
    
 Rules:
-    1. You lose 1 point for each new block
-    2. You receive 10 points for each line
+        1. You lose 1 point for each new block
+        
+        2. You receive 10 points for each line
 
 Goal:
-    Your goal is to receive as many points as you can
+
+        Your goal is to receive as many points as you can
   
 P.S. When entering ip address of the server don't forget to add dots in correct places: 127.0.0.1 -> correct, 1270.0.1. -> incorrect, DO NOT DO THAT
 
