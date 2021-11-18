@@ -38,6 +38,7 @@ After installing dependencies:
 Now you are able to "play" tetris -> launch "tetris".
 
 Hotkeys:
+
     1 - singleplayer mode
    
     2 - multiplayer mode on keyboard (left player - WASD, right player - arrows)
