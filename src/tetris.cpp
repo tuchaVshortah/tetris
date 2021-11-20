@@ -111,7 +111,6 @@ int tetris(sf::RenderWindow &window){
             for(int i = 0; i < HEIGHT; ++i){
                 for(int j = 0; j < WIDTH; ++j){
                     inactiveBlockSprites[i][j] = 0;
-                    inactiveBlockSprites2[i][j] = 0;
                 }
             }
 
@@ -324,6 +323,17 @@ void logic(sf::RenderWindow &window){
 				}else if(event.key.code == Keyboard::A){
 					horizontalLeft(blocks, backupBlocks, true);
 				}else if(event.key.code == Keyboard::Escape){
+                    for(int i = 0; i < 4; ++i){
+                        blocks[i].x = 0;
+                        blocks2[i].x = 0;
+
+                        blocks[i].y = 0;
+                        blocks2[i].y = 0;
+
+                        blocks[i].blockSprite = 0;
+                        blocks2[i].blockSprite = 0;
+                    }
+
                     for(int i = 0; i < HEIGHT; ++i){
                         for(int j = 0; j < WIDTH; ++j){
                             inactiveBlockSprites[i][j] = 0;

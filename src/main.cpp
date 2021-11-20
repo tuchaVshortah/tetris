@@ -267,6 +267,7 @@ int main(){
 							i = 0;
 						}else{
                             window.clear(Color::White);
+                            getPort = false;
 							if(tetrisNetwork(window, server) != 0){
 								if(window.isOpen()){
 									window.close();

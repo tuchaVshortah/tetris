@@ -234,22 +234,25 @@ void listen(){
 
 void server(){
     std::size_t received;
+    int local_score = 0;
     clientSocket.setBlocking(true);
     while(true){
         if(clientSocket.receive(blocks2, sizeof(blocks2), received) == sf::Socket::Status::Done){
             if(clientSocket.receive(inactiveBlockSprites2, sizeof(inactiveBlockSprites2), received) == sf::Socket::Status::Done){
-                if(clientSocket.send(blocks, sizeof(blocks)) == sf::Socket::Status::Done){
-                    if(clientSocket.send(inactiveBlockSprites, sizeof(inactiveBlockSprites2)) != sf::Socket::Status::Done){
-                        continue;
+                if(clientSocket.receive(&local_score, sizeof(local_score), received) == sf::Socket::Status::Done){
+                    if(scoreValue2 != local_score){
+                        scoreValue2 = local_score;
+                        score2.setString(std::to_string(scoreValue2));
                     }
-                }else{
-                    continue;
+                    if(clientSocket.send(blocks, sizeof(blocks)) == sf::Socket::Status::Done){
+                        if(clientSocket.send(inactiveBlockSprites, sizeof(inactiveBlockSprites2)) == sf::Socket::Status::Done){
+                            if(clientSocket.send(&scoreValue, sizeof(scoreValue)) != sf::Socket::Status::Done){
+                                continue;
+                            }
+                        }
+                    }
                 }
-            }else{
-                continue;
             }
-        }else{
-            continue;
         }
     }
 }
@@ -260,23 +263,25 @@ void connect(){
 
 void client(){
     std::size_t received;
+    int local_score = 0;
     serverSocket.setBlocking(true);
     while(true){
         if(timer > delay){
             if(serverSocket.send(blocks, sizeof(blocks)) == sf::Socket::Status::Done){
                 if(serverSocket.send(inactiveBlockSprites, sizeof(inactiveBlockSprites2)) == sf::Socket::Status::Done){
-                    if(serverSocket.receive(blocks2, sizeof(blocks2), received) == sf::Socket::Status::Done){
-                        if(serverSocket.receive(inactiveBlockSprites2, sizeof(inactiveBlockSprites2), received) != sf::Socket::Status::Done){
-                            continue;
+                    if(serverSocket.send(&scoreValue, sizeof(scoreValue)) == sf::Socket::Status::Done){
+                        if(serverSocket.receive(blocks2, sizeof(blocks2), received) == sf::Socket::Status::Done){
+                            if(serverSocket.receive(inactiveBlockSprites2, sizeof(inactiveBlockSprites2), received) == sf::Socket::Status::Done){
+                                if(serverSocket.receive(&local_score, sizeof(local_score), received) == sf::Socket::Status::Done){
+                                    if(scoreValue2 != local_score){
+                                        scoreValue2 = local_score;
+                                        score2.setString(std::to_string(scoreValue2));
+                                    }
+                                }
+                            }
                         }
-                    }else{
-                        continue;
                     }
-                }else{
-                    continue;
                 }
-            }else{
-                continue;
             }
         }
     }
